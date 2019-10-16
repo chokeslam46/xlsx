@@ -117,9 +117,26 @@ func newXlsxStyleSheet(t *theme) *xlsxStyleSheet {
 }
 
 func (styles *xlsxStyleSheet) reset() {
+	font := DefaultFont()
 	styles.Fonts = xlsxFonts{}
 	styles.Fills = xlsxFills{}
 	styles.Borders = xlsxBorders{}
+
+	styles.addFont(
+		xlsxFont{
+			Sz:   xlsxVal{Val: strconv.Itoa(font.Size)},
+			Name: xlsxVal{Val: font.Name},
+		})
+
+	styles.addFill(
+		xlsxFill{
+			PatternFill: xlsxPatternFill{PatternType: "none"},
+		})
+
+	styles.addFill(
+		xlsxFill{
+			PatternFill: xlsxPatternFill{PatternType: "lightGray"},
+		})
 
 	// Microsoft seems to want an emtpy border to start with
 	styles.addBorder(
